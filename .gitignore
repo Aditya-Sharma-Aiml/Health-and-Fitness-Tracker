@@ -1,0 +1,26 @@
+# Ignore node_modules and build output
+node_modules/
+dist/
+build/
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore environment files
+.env
+.env.local
+
+# Ignore logs
+*.log
+
+# Ignore package locks
+package-lock.json
+yarn.lock
+
+# Ignore VSCode settings (optional)
+.vscode/
+
+# Ignore any OS temp files
+*.swp
+*.tmp

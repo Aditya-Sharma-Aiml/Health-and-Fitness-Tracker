@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Daily Challenges</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-green-300 to-blue-500">
+  <div class="bg-white rounded-lg shadow-md p-6 w-full max-w-md">
+    <h2 class="text-2xl font-bold mb-4">Your Daily Challenges</h2>
+    <ul id="challengeList" class="space-y-2"></ul>
+
+    <form id="challengeForm" class="mt-4 flex">
+      <input type="text" id="challengeInput" placeholder="Add a challenge..."
+        class="flex-1 px-4 py-2 border border-gray-300 rounded-l focus:outline-none">
+      <button class="bg-blue-600 text-white px-4 py-2 rounded-r" type="submit">Add</button>
+    </form>
+
+    <button onclick="goToHome()"
+      class="mt-4 bg-green-600 hover:bg-green-700 text-white w-full py-2 rounded">Save & Go to Home</button>
+  </div>
+
+  <script>
+    const challenges = [];
+
+    document.getElementById('challengeForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const input = document.getElementById('challengeInput');
+      const challengeText = input.value.trim();
+      if (challengeText) {
+        challenges.push({ text: challengeText, completed: false });
+        renderChallenges();
+        input.value = '';
+      }
+    });
+
+    function renderChallenges() {
+      const list = document.getElementById('challengeList');
+      list.innerHTML = '';
+      challenges.forEach((ch, index) => {
+        const li = document.createElement('li');
+        li.className = 'flex justify-between items-center bg-gray-100 px-4 py-2 rounded';
+        li.innerHTML = `
+          <span>${ch.text}</span>
+          <input type="checkbox" onchange="toggleComplete(${index})">
+        `;
+        list.appendChild(li);
+      });
+    }
+
+    function toggleComplete(index) {
+      challenges[index].completed = !challenges[index].completed;
+    }
+
+    function goToHome() {
+      const encodedData = encodeURIComponent(JSON.stringify(challenges));
+      window.location.href = `index.html?challenges=${encodedData}`;
+    }
+  </script>
+</body>
+</html>

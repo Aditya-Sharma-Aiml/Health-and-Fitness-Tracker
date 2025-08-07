@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Fitness Quiz</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="./output.css">
+</head>
+<body class="bg-gradient-to-r from-sky-400 via-purple-400 to-indigo-600 min-h-screen flex items-center justify-center p-6">
+
+  <div id="quizContainer" class="bg-white rounded-lg shadow-lg p-8 max-w-md w-full text-center font-sans">
+    <h1 class="text-2xl font-bold mb-4">Fitness Quiz</h1>
+
+    <!-- Start Quiz Button -->
+    <button id="startBtn" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Start Quiz</button>
+
+    <!-- Quiz Form -->
+    <form id="quizForm" class="hidden mt-6 space-y-4 text-left">
+      <label class="block">
+        Age:
+        <input type="number" id="age" class="w-full mt-1 p-2 border rounded" required>
+      </label>
+
+      <label class="block">
+        Gender:
+        <select id="gender" class="w-full mt-1 p-2 border rounded" required>
+          <option value="">Select</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
+      </label>
+
+      <label class="block">
+        Weight (kg):
+        <input type="number" id="weight" class="w-full mt-1 p-2 border rounded" required>
+      </label>
+
+      <label class="block">
+        Height (cm):
+        <input type="number" id="height" class="w-full mt-1 p-2 border rounded" required>
+      </label>
+
+      <label class="block">
+        Fitness Goal:
+        <select id="goal" class="w-full mt-1 p-2 border rounded" required>
+          <option value="">Select</option>
+          <option value="weight_loss">Weight Loss</option>
+          <option value="muscle_gain">Muscle Gain</option>
+          <option value="fitness">General Fitness</option>
+        </select>
+      </label>
+
+      <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Submit</button>
+    </form>
+
+    <!-- Result Section -->
+    <div id="result" class="hidden mt-6 text-left"></div>
+  </div>
+
+  <script>
+    const startBtn = document.getElementById("startBtn");
+    const quizForm = document.getElementById("quizForm");
+    const resultDiv = document.getElementById("result");
+
+    startBtn.addEventListener("click", () => {
+      startBtn.classList.add("hidden");
+      quizForm.classList.remove("hidden");
+    });
+
+    quizForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const age = parseInt(document.getElementById("age").value);
+      const gender = document.getElementById("gender").value;
+      const weight = parseFloat(document.getElementById("weight").value);
+      const height = parseFloat(document.getElementById("height").value);
+      const goal = document.getElementById("goal").value;
+
+      // Simple suggestion logic
+      let exercise = "";
+      let diet = "";
+
+      if (goal === "weight_loss") {
+        exercise = "Cardio (30 mins daily), HIIT, Brisk walking.";
+        diet = "High-protein, low-carb, avoid sugar. Drink 2-3L water.";
+      } else if (goal === "muscle_gain") {
+        exercise = "Weight training, resistance workouts, protein supplements.";
+        diet = "High-protein diet (eggs, chicken, tofu), healthy fats, complex carbs.";
+      } else if (goal === "fitness") {
+        exercise = "Yoga, walking, light strength training.";
+        diet = "Balanced diet with all nutrients, fruits, veggies, and enough water.";
+      }
+
+      resultDiv.innerHTML = `
+        <h2 class="text-xl font-semibold mb-2">Your Health Plan:</h2>
+        <p><strong>Recommended Exercise:</strong> ${exercise}</p>
+        <p><strong>Diet Suggestion:</strong> ${diet}</p>
+      `;
+
+      quizForm.classList.add("hidden");
+      resultDiv.classList.remove("hidden");
+    });
+  </script>
+</body>
+</html>
